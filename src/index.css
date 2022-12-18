@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100%;
+}
+
+.App {
+    height: 100vh;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.country {
+    overflow: hidden;
+}
+
+.country__image {
+    object-fit: cover;
+}
+
+.dark-mode {
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    z-index: 5;
+}
+
+.slider:before {
+    @apply w-5 h-5 rounded-full dark:bg-slate-600;
+    display: block;
+    position: absolute;
+    right: -0.55rem;
+    top: -0.1rem;
+    content: "";
+}
+
+.info-name {
+    @apply font-semibold;
+}
+
+.info {
+    @apply dark:text-slate-300 text-black font-light;
+}
+
+.description-text {
+    @apply dark:text-slate-200;
+}
+
+.country-data {
+    @apply dark:text-slate-400 text-slate-600 font-light;
+}
+
+.search {
+    position: relative;
+}
+
+.search svg {
+    position: absolute;
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    left: 0.5rem;
+    top: -0.4rem;
+}
+
