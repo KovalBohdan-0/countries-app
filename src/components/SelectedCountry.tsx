@@ -47,10 +47,10 @@ export default function SelectedCountry(props: { countriesArray: any[]; }) {
     return (
         <div className="p-28 min-h-full h-fit bg-white dark:bg-gray-900 dark:text-white text-black">
             <button onClick={() => navigate(-1)} id="back" className="flex gap-3 w-fit px-6 py-2 rounded-md text-xl font-semibold dark:bg-slate-800 bg-slate-200">
-                <img className="w-5" src={backArrowIcon} alt="" />Back
+                <img className="w-5" src={backArrowIcon} alt="Go to previous page" />Back
             </button>
             <div className="selected-country flex gap-32 my-16 flex-col md:flex-row">
-                <img className="w-full h-1/5 md:w-2/5 aspect-video shadow-2xl" src={selectedCountry.flags.svg} />
+                <img className="w-full h-1/5 md:w-2/5 aspect-video shadow-2xl" src={selectedCountry.flags.svg} alt="Flag of country"/>
                 <div className="selected-country-info">
                     <p className="text-2xl font-extrabold">{selectedCountry.name.common}</p>
                     <div className="grid grid-cols-2 gap-x-16 gap-y-5 pt-5 pb-10">
