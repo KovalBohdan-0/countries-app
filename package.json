@@ -1,16 +1,19 @@
 {
   "name": "countries-app",
+  "homepage": "https://shadee404.github.io/countries-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "start:css": "tailwindcss -o src/tailwind.css --watch",
-    "build:css": "NODE_ENV=production tailwindcss -o src/tailwind.css -m"
+    "build:css": "NODE_ENV=production tailwindcss -o src/tailwind.css -m",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "cssnano": "^5.1.14",
     "leaflet": "^1.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -23,6 +26,7 @@
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",
     "autoprefixer": "^10.4.13",
+    "gh-pages": "^4.0.0",
     "postcss": "^8.4.20",
     "tailwindcss": "^3.2.4",
     "typescript": "^4.9.3",

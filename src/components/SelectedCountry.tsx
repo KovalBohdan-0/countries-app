@@ -5,13 +5,18 @@ import { useEffect } from "react";
 
 export default function SelectedCountry(props: { countriesArray: any[]; }) {
     const { id } = useParams();
+    let navigate = useNavigate();
     const selectedCountry = props.countriesArray.find(country => country.cca3 == id);
+
+    if (selectedCountry == null) {
+        navigate("/notfound", { replace: true });
+    }
+
     let currencies: string[] = [];
     let borderCountries: any[] = [];
     selectedCountry.borders && selectedCountry.borders.forEach((border: any) => {
         borderCountries.push(props.countriesArray.find(country => country.cca3 == border));
     });
-    let navigate = useNavigate();
 
     if (!selectedCountry.currencies == null) {
         Object.keys(selectedCountry.currencies).forEach(currency => currencies.push(selectedCountry.currencies[`${currency}`].name));

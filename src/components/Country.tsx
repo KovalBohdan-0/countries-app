@@ -5,7 +5,7 @@ export default function Country(props: any) {
 
     return (
         <button className="w-full" onClick={() => navigate(`/country/${props.countryData.cca3}`)}>
-            <div className="country rounded-md w-full">
+            <div className="country rounded-md w-full text-left">
                 <img
                     src={props.countryData.flags.svg}
                     className="country__image w-full aspect-video"
