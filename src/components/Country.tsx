@@ -9,6 +9,7 @@ export default function Country(props: any) {
                 <img
                     src={props.countryData.flags.svg}
                     className="country__image w-full aspect-video"
+                    alt="Flag of country"
                 />
                 <div className="country__description w-full bg-white dark:bg-slate-800 p-5 font-semibold dark:text-slate-200 text-black">
                     <p className="font-extrabold">{props.countryData.name.common}</p>
