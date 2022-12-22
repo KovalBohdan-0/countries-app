@@ -2,22 +2,21 @@ import { useEffect, useState } from "react";
 import Country from "./Country";
 import Select from 'react-select';
 import Search from "./Search";
+import { CountryType } from "../App";
 
-export default function Countries(props: any) {
+export interface Region {
+    value: string;
+    label: string;
+}
+
+const Countries = (props: { darkMode: boolean, countriesArray: CountryType[] }): JSX.Element => {
+
+
     const [countriesArray, setCountriesArray] = useState(() => {
-        let sortedCountries = props.countriesArray;
-        sortedCountries.sort((firstCountry: { name: { common: string; }; }, secondCountry: { name: { common: string; }; }) => {
-            let firstName = firstCountry.name.common.toLowerCase();
-            let secondName = secondCountry.name.common.toLowerCase();
+        let sortedCountries: CountryType[] = Array.from(props.countriesArray);
+        sortedCountries.sort((firstCountry, secondCountry) => {
 
-            //Sort in alphabetic order
-            if (firstName < secondName) {
-                return -1;
-            } else if (firstName > secondName) {
-                return 1;
-            } else {
-                return 0;
-            }
+            return firstCountry.name.common.toLowerCase().localeCompare(secondCountry.name.common.toLowerCase());
         });
 
         return sortedCountries;
@@ -25,7 +24,7 @@ export default function Countries(props: any) {
 
 
     const [selectedRegion, setSelectedRegion] = useState<any>({ value: "all", label: 'All regions' });
-    const regions: any[] = [
+    const regions: Region[] = [
         { value: "all", label: 'All regions' },
         { value: 'Africa', label: 'Africa' },
         { value: 'Americas', label: 'America' },
@@ -34,14 +33,33 @@ export default function Countries(props: any) {
         { value: 'Oceania', label: 'Oceania' }
     ];
 
-    //Updates with selected region
     useEffect(() => {
         if (selectedRegion.value != "all") {
-            setCountriesArray(props.countriesArray.filter((regionCountry: { region: any; }) => regionCountry.region == selectedRegion.value));
+            setCountriesArray(() => {
+                let sortedArray: CountryType[] = props.countriesArray.filter((regionCountry) => regionCountry.region == selectedRegion.value);
+                sortedArray.sort((firstCountry, secondCountry) => {
+
+                    return firstCountry.name.common.toLowerCase().localeCompare(secondCountry.name.common.toLowerCase());
+                });
+
+                return sortedArray;
+            });
         } else {
-            setCountriesArray(props.countriesArray);
+            setCountriesArray(() => {
+                let sortedCountries: CountryType[] = Array.from(props.countriesArray);
+                sortedCountries.sort((firstCountry, secondCountry) => {
+
+                    return firstCountry.name.common.toLowerCase().localeCompare(secondCountry.name.common.toLowerCase());
+                });
+
+                return sortedCountries;
+            });
         }
     }, [selectedRegion]);
+
+    useEffect(() => {
+
+    }, [countriesArray]);
 
     const selectStyles = props.darkMode ? {
         control: (styles: any) => ({
@@ -85,12 +103,14 @@ export default function Countries(props: any) {
         }),
     }
 
+    console.log(selectedRegion);
+
     return (
         <div className="bg-stone-300 dark:bg-gray-900 pt-28 px-10 min-h-screen">
             <div className="w-full mb-10 flex sm:flex-row flex-col">
                 <Search
                     setCountriesArray={setCountriesArray}
-                    countriesArray={props.countriesArray}
+                    countriesArray={countriesArray}
                     selectedRegion={selectedRegion}
                 />
                 <Select
@@ -102,10 +122,12 @@ export default function Countries(props: any) {
                 />
             </div>
             <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-items-center gap-16">
-                {countriesArray.map((country: { cca3: any; }) => (
+                {countriesArray.map((country: CountryType) => (
                     <Country key={country.cca3} countryData={country} />
                 ))}
             </div>
         </div>
     );
 }
+
+export default Countries;

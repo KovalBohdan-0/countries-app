@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function Navbar(props: any) {
+const Navbar = (props: {darkMode: boolean, setDarkMode: (prevDarkMode: any) => void}): JSX.Element => {
 
     function changeDarkMode() {
         props.setDarkMode((prevDarkMode: any) => !prevDarkMode);
@@ -18,3 +18,5 @@ export default function Navbar(props: any) {
         </div>
     );
 }
+
+export default Navbar;

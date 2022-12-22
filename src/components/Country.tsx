@@ -1,6 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { CountryType } from "../App";
 
-export default function Country(props: any) {
+const Country = (props: {countryData: CountryType}): JSX.Element => {
     let navigate = useNavigate();
 
     return (
@@ -35,3 +36,5 @@ export default function Country(props: any) {
         </button>
     );
 }
+
+export default Country;

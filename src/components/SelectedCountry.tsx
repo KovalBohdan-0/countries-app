@@ -2,29 +2,37 @@ import { useNavigate, useParams } from "react-router-dom";
 import backArrowIcon from "../assets/back-arrow-icon.svg";
 import L from "leaflet";
 import { useEffect } from "react";
+import { CountryType } from "../App";
 
-export default function SelectedCountry(props: { countriesArray: any[]; }) {
+const SelectedCountry = (props: { countriesArray: CountryType[]; }): JSX.Element => {
     const { id } = useParams();
     let navigate = useNavigate();
-    const selectedCountry = props.countriesArray.find(country => country.cca3 == id);
+    const selectedCountry: CountryType = props.countriesArray.find(country => country.cca3 == id)!;
 
     if (selectedCountry == null) {
         navigate("/notfound", { replace: true });
     }
 
-    let currencies: string[] = [];
-    let borderCountries: any[] = [];
-    selectedCountry.borders && selectedCountry.borders.forEach((border: any) => {
-        borderCountries.push(props.countriesArray.find(country => country.cca3 == border));
-    });
+    let currencies: Object[] = [];
+    let borderCountries: CountryType[] = [];
 
-    if (!selectedCountry.currencies == null) {
-        Object.keys(selectedCountry.currencies).forEach(currency => currencies.push(selectedCountry.currencies[`${currency}`].name));
+    if (selectedCountry.borders != null) {
+        selectedCountry.borders.forEach((border: string) => {
+
+            if (props.countriesArray.find(country => country.cca3 == border) != undefined) {
+                borderCountries.push(props.countriesArray.find(country => country.cca3 == border)!);
+            }
+        });
     }
 
-    //Adds map
+    if (selectedCountry.currencies != null) {
+        Object.keys(selectedCountry.currencies!).forEach(currency => currencies.push(selectedCountry.currencies![`${currency}`].name));
+    }
+
+    // Adds map
     useEffect(() => {
-        let map = L.map('map').setView(selectedCountry.latlng, 5);
+        let cordinats: any = selectedCountry.latlng.map((cordinat: number) => cordinat.toString());
+        let map = L.map('map').setView(cordinats, 5);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -35,6 +43,7 @@ export default function SelectedCountry(props: { countriesArray: any[]; }) {
             behavior: 'smooth'
         });
 
+        //Remove map on exit, because it need to be reloaded
         return () => {
             const clear = async () => {
                 map.remove();
@@ -50,7 +59,7 @@ export default function SelectedCountry(props: { countriesArray: any[]; }) {
                 <img className="w-5" src={backArrowIcon} alt="Go to previous page" />Back
             </button>
             <div className="selected-country flex gap-32 my-16 flex-col md:flex-row">
-                <img className="w-full h-1/5 md:w-2/5 aspect-video shadow-2xl" src={selectedCountry.flags.svg} alt="Flag of country"/>
+                <img className="w-full h-1/5 md:w-2/5 aspect-video shadow-2xl" src={selectedCountry.flags.svg} alt="Flag of country" />
                 <div className="selected-country-info">
                     <p className="text-2xl font-extrabold">{selectedCountry.name.common}</p>
                     <div className="grid grid-cols-2 gap-x-16 gap-y-5 pt-5 pb-10">
@@ -119,3 +128,4 @@ export default function SelectedCountry(props: { countriesArray: any[]; }) {
     );
 }
 
+export default SelectedCountry;

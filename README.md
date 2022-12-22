@@ -20,8 +20,8 @@
 
 ### Links
 
-- Solution URL: (https://shadee404.github.io/countries-app/)
-- Live Site URL: ()
+- Solution URL: (https://github.com/Shadee404/countries-app)
+- Live Site URL: (https://shadee404.github.io/countries-app/)
 
 ## My process
 
