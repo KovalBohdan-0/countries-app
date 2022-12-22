@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar";
 import SelectedCountry from "./components/SelectedCountry";
 import { useState, useEffect } from "react";
 import NotFound from "./components/NotFound";
-import data from "./assets/all.json";
 
 export interface CountryType {
   name: {
